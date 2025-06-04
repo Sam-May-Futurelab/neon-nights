@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Nights - Insert Coin. Start Your Night.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <style>
+        /* ========== RESET & BASE STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Synthwave Color Palette */
+            --neon-pink: #ff0080;
+            --neon-blue: #00ffff;
+            --neon-purple: #8000ff;
+            --deep-purple: #1a0033;
+            --dark-bg: #0a0015;
+            --circuit-green: #00ff41;
+            --chrome-silver: #c0c0c0;
+            --glow-white: #ffffff;
+            
+            /* Typography */
+            --font-body: 'Inter', sans-serif;
+            --font-display: 'Orbitron', monospace;
+            
+            /* Spacing */
+            --section-padding: 6rem 2rem;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--dark-bg);
+            color: var(--glow-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== ANIMATED BACKGROUNDS ========== */
+        .circuit-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 98%, var(--neon-blue) 100%),
+                linear-gradient(180deg, transparent 98%, var(--neon-pink) 100%);
+            background-size: 50px 50px;
+            opacity: 0.1;
+            animation: circuitFlow 20s linear infinite;
+        }
+
+        @keyframes circuitFlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-purple));
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .glow-effect:hover::before {
+            opacity: 0.7;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: 
+                /* Hero image with lighter synthwave overlay for better visibility */
+                linear-gradient(rgba(10, 0, 21, 0.3), rgba(26, 0, 51, 0.4)),
+                url('images/hero-bg.png') center center / cover no-repeat,
+                /* Fallback gradients if image doesn't load */
+                radial-gradient(ellipse at center, var(--neon-purple) 0%, transparent 50%),
+                linear-gradient(135deg, var(--deep-purple) 0%, var(--dark-bg) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, var(--neon-blue), transparent),
+                radial-gradient(2px 2px at 40px 70px, var(--neon-pink), transparent),
+                radial-gradient(1px 1px at 90px 40px, var(--circuit-green), transparent);
+            background-repeat: repeat;
+            background-size: 100px 100px;
+            animation: starField 30s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes starField {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            color: var(--chrome-silver);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-primary {
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
+            border-color: var(--neon-pink);
+            color: var(--glow-white);
+            box-shadow: 0 8px 32px rgba(255, 0, 128, 0.3);
+        }
+
+        .cta-secondary {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 0, 128, 0.4);
+        }
+
+        .cta-secondary:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 255, 255, 0.3);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--neon-blue);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* ========== SECTION STYLES ========== */
+        .section {
+            position: relative;
+            padding: var(--section-padding);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.01em;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 1px;
+        }
+
+        /* ========== ABOUT SECTION ========== */
+        .about {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(26, 0, 51, 0.3), rgba(10, 0, 21, 0.4));
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            margin-top: 8rem; /* Add gap between hero and about sections */
+        }
+
+        .about-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .about-content {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--chrome-silver);
+        }
+
+        .joystick-accent {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            margin: 2rem auto;
+            border: 3px solid var(--neon-pink);
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--neon-pink) 20%, transparent 40%);
+            box-shadow: 0 0 30px var(--neon-pink);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ========== GAMES GALLERY ========== */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, rgba(128, 0, 255, 0.1), rgba(0, 255, 255, 0.05));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-pink);
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .game-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--neon-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ========== MENU SECTION ========== */
+        .menu-section {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: transparent; /* Completely transparent to show animation */
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .menu-lottie-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.9; /* Maximum visibility while still allowing content readability */
+            filter: hue-rotate(280deg) saturate(1.5) brightness(1.2); /* Enhanced synthwave colors */
+        }
+
+        .menu-content {
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(0.5px); /* Minimal blur for readability */
+            background: rgba(10, 0, 21, 0.05); /* Nearly transparent overlay */
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .menu-column {
+            background: linear-gradient(135deg, rgba(26, 0, 51, 0.6), rgba(10, 0, 21, 0.8));
+            border: 1px solid rgba(255, 0, 128, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-column h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--neon-pink);
+            margin-bottom: 2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px dotted rgba(0, 255, 255, 0.3);
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-name {
+            font-weight: 600;
+            color: var(--glow-white);
+        }
+
+        .menu-price {
+            font-family: var(--font-display);
+            color: var(--neon-blue);
+            font-weight: 700;
+        }
+
+        /* ========== EVENTS SECTION ========== */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, rgba(128, 0, 255, 0.2), rgba(26, 0, 51, 0.3));
+            border: 1px solid rgba(128, 0, 255, 0.4);
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .event-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 48%, var(--neon-pink) 50%, transparent 52%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .event-card:hover::after {
+            opacity: 0.1;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(128, 0, 255, 0.4);
+        }
+
+        .event-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--neon-purple);
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            color: var(--chrome-silver);
+            line-height: 1.6;
+        }
+
+        .events-cta {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(10, 0, 21, 0.8));
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--neon-blue);
+            font-family: var(--font-display);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-family: var(--font-display);
+            color: var(--neon-pink);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: linear-gradient(135deg, var(--deep-purple), var(--dark-bg));
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-family: var(--font-display);
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--neon-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--neon-pink);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .social-icon:hover {
+            background: var(--neon-pink);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--neon-pink);
+            animation: flicker 0.1s ease-in-out;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-blue);
+            border-radius: 5px;
+            color: var(--glow-white);
+            font-family: var(--font-display);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(192, 192, 192, 0.7);
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            border: none;
+            border-radius: 5px;
+            color: var(--glow-white);
+            font-family: var(--font-display);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            padding-top: 2rem;
+            color: var(--chrome-silver);
+            font-size: 0.9rem;
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 4rem 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== UTILITY CLASSES ========== */
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mt-2 { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="circuit-bg"></div>
+        <div class="hero-content">
+            <h1>Insert Coin. Start Your Night.</h1>
+            <p>Where retro gaming meets modern nightlife.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-btn cta-primary glow-effect">Book a Booth</a>
+                <a href="#menu" class="cta-btn cta-secondary">Explore Menu</a>
+            </div>
+            <!-- High Score Counter Display -->
+            <div style="font-family: var(--font-display); color: var(--circuit-green); font-size: 1.5rem; margin-top: 2rem;">
+                HIGH SCORE: 999,999 ▶ PRESS START ◀
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span style="font-family: var(--font-display); margin-bottom: 0.5rem;">SCROLL</span>
+            <span style="font-size: 1.5rem;">▼</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about">
+        <!-- Background Video -->
+        <video class="about-video-bg" autoplay muted loop playsinline>
+            <source src="images/neon-nights-bg.mp4" type="video/mp4">
+            <source src="images/neon-nights-bg.webm" type="video/webm">
+            <!-- Fallback message if video doesn't load -->
+            Your browser does not support the video tag.
+        </video>
+        
+        <h2 class="section-title">What is Neon Nights?</h2>
+        <div class="about-content">
+            <p>Step into the future of nightlife where classic arcade culture collides with premium cocktail experiences. Neon Nights isn't just a bar—it's a portal to a synthwave paradise where every sip powers up your night and every game unlocks new levels of fun. Immerse yourself in the glow of vintage cabinets, the pulse of electronic beats, and the thrill of high-score competitions, all while enjoying craft cocktails that would make even the most discerning player hit continue.</p>
+            <!-- Neon Joystick Accent -->
+            <div class="joystick-accent"></div>
+        </div>
+    </section>
+
+    <!-- Games Gallery -->
+    <section class="section">
+        <h2 class="section-title">Level Select</h2>
+        <div class="games-grid">
+            <div class="game-card glow-effect">
+                <span class="game-icon">🕹️</span>
+                <h3 class="game-title">Pac-Man</h3>
+                <p>Chase those ghosts through neon mazes</p>
+            </div>
+            <div class="game-card glow-effect">
+                <span class="game-icon">👊</span>
+                <h3 class="game-title">Street Fighter II</h3>
+                <p>Hadoken your way to victory</p>
+            </div>
+            <div class="game-card glow-effect">
+                <span class="game-icon">🚀</span>
+                <h3 class="game-title">Galaga</h3>
+                <p>Defend the galaxy in style</p>
+            </div>
+            <div class="game-card glow-effect">
+                <span class="game-icon">🦖</span>
+                <h3 class="game-title">Dig Dug</h3>
+                <p>Pump up the retro vibes</p>
+            </div>
+            <div class="game-card glow-effect">
+                <span class="game-icon">🏓</span>
+                <h3 class="game-title">Pong</h3>
+                <p>Where it all began</p>
+            </div>
+            <div class="game-card glow-effect">
+                <span class="game-icon">🍄</span>
+                <h3 class="game-title">Donkey Kong</h3>
+                <p>Jump your way to the top</p>
+            </div>
+            <div class="game-card glow-effect">
+                <span class="game-icon">👾</span>
+                <h3 class="game-title">Space Invaders</h3>
+                <p>Retro alien blasting action</p>
+            </div>
+            <div class="game-card glow-effect">
+                <span class="game-icon">🏎️</span>
+                <h3 class="game-title">Out Run</h3>
+                <p>Cruise the synthwave highway</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section menu-section" id="menu">
+        <!-- Lottie Animation Background -->
+        <div id="menuLottieAnimation" class="menu-lottie-bg"></div>
+        
+        <div class="menu-content">
+            <h2 class="section-title">Game Menu</h2>
+            <div class="menu-grid">
+            <div class="menu-column">
+                <h3>⚡ Power-Up Cocktails</h3>
+                <div class="menu-item">
+                    <span class="menu-name">🍸 1-UP Martini</span>
+                    <span class="menu-price">$14</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🌟 Star Power Punch</span>
+                    <span class="menu-price">$12</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🔥 Fire Flower Fizz</span>
+                    <span class="menu-price">$13</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">❄️ Ice Beam Blue</span>
+                    <span class="menu-price">$11</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">⚡ Lightning Bolt</span>
+                    <span class="menu-price">$15</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🌙 Moon Beam Margarita</span>
+                    <span class="menu-price">$13</span>
+                </div>
+            </div>
+            <div class="menu-column">
+                <h3>🎮 Level-Up Snacks</h3>
+                <div class="menu-item">
+                    <span class="menu-name">🍟 Pixel Perfect Fries</span>
+                    <span class="menu-price">$8</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🍕 8-Bit Pizza Slices</span>
+                    <span class="menu-price">$6</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🥨 Circuit Board Pretzels</span>
+                    <span class="menu-price">$7</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🍗 Boss Battle Wings</span>
+                    <span class="menu-price">$12</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🧀 Cheese Cube Nachos</span>
+                    <span class="menu-price">$10</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-name">🍩 Power Pellet Donuts</span>
+                    <span class="menu-price">$5</span>
+                </div>
+            </div>
+        </div>
+        </div> <!-- Close menu-content -->
+    </section>
+
+    <!-- Events Section -->
+    <section class="section">
+        <h2 class="section-title">Event Schedule</h2>
+        <div class="events-grid">
+            <div class="event-card">
+                <h3 class="event-title">Themed Nights</h3>
+                <p class="event-description">Journey through different gaming eras every Thursday. From 8-bit classics to modern indies, each night celebrates a unique piece of gaming history with matching cocktails and decorations.</p>
+            </div>
+            <div class="event-card">
+                <h3 class="event-title">Tournaments</h3>
+                <p class="event-description">Compete for glory and prizes every weekend. From Street Fighter showdowns to Pac-Man speed runs, prove your skills and claim your spot on our digital leaderboard.</p>
+            </div>
+            <div class="event-card">
+                <h3 class="event-title">Private Parties</h3>
+                <p class="event-description">Book the entire arcade for your special occasion. Birthday parties, corporate events, or just a night out with friends - we'll create the perfect retro-futuristic atmosphere.</p>
+            </div>
+        </div>
+        <div class="events-cta">
+            <a href="#" class="cta-btn cta-primary">Check Upcoming Events</a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section">
+        <h2 class="section-title">Player Reviews</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">This place is absolutely incredible! The atmosphere is like stepping into Tron, and the cocktails are next level. Best night out I've had in years!</p>
+                <p class="testimonial-author">— Alex_CodeMaster</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">Finally found my perfect hangout spot. Great games, amazing drinks, and the neon aesthetic is pure perfection. Can't wait to come back!</p>
+                <p class="testimonial-author">— Sam, Combo Queen</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">Neon Nights hit the perfect balance between nostalgic gaming and sophisticated nightlife. The staff knows their cocktails AND their high scores!</p>
+                <p class="testimonial-author">— RetroRival_99</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="circuit-bg"></div>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Location</h4>
+                    <p>123 Synthwave Street<br>Cyber City, CC 90210<br>(555) NEON-BAR</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hours</h4>
+                    <p>Tuesday - Thursday: 6PM - 2AM<br>Friday - Saturday: 6PM - 3AM<br>Sunday: 6PM - 12AM<br>Monday: GAME OVER</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p style="margin-bottom: 1rem;">Stay updated on events and specials</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="ENTER EMAIL ADDRESS" required>
+                        <button type="submit" class="newsletter-btn">JOIN</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Social Icons -->
+            <div class="social-icons">
+                <a href="#" class="social-icon" title="Facebook">📘</a>
+                <a href="#" class="social-icon" title="Instagram">📷</a>
+                <a href="#" class="social-icon" title="Twitter">🐦</a>
+                <a href="#" class="social-icon" title="TikTok">🎵</a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Neon Nights Arcade Bar. All rights reserved. | Game On Responsibly</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lottie animation for menu section background
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuAnimation = lottie.loadAnimation({
+                container: document.getElementById('menuLottieAnimation'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'images/bg-animation.json'
+            });
+
+            // Optional: Add error handling
+            menuAnimation.addEventListener('data_failed', function() {
+                console.warn('Failed to load menu background animation');
+                // Fallback: hide the animation container if loading fails
+                document.getElementById('menuLottieAnimation').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
