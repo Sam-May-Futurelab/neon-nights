@@ -303,55 +303,166 @@
         /* ========== GAMES GALLERY ========== */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .game-card {
-            background: linear-gradient(135deg, rgba(128, 0, 255, 0.1), rgba(0, 255, 255, 0.05));
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 2rem;
+            background: 
+                /* CRT screen effect */
+                linear-gradient(180deg, transparent 50%, rgba(0, 255, 255, 0.03) 50%),
+                linear-gradient(135deg, rgba(128, 0, 255, 0.15), rgba(0, 255, 255, 0.08));
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
+            /* CRT screen lines effect */
+            background-size: 100% 4px, 100% 100%;
         }
 
+        /* Neon outline animation on hover */
         .game-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            border-radius: 12px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+            animation: rotateGlow 3s linear infinite;
+        }
+
+        /* Scanning line effect */
+        .game-card::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            opacity: 0;
+            transition: all 0.6s ease;
         }
 
         .game-card:hover::before {
-            left: 100%;
+            opacity: 0.8;
+            box-shadow: 0 0 20px var(--neon-pink), inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .game-card:hover::after {
+            opacity: 1;
+            top: 100%;
+            animation: scanLine 1.5s ease-in-out infinite;
         }
 
         .game-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--neon-pink);
-            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
+            box-shadow: 
+                0 0 8px var(--neon-blue), 
+                0 0 16px var(--neon-blue),
+                0 15px 40px rgba(255, 0, 128, 0.4);
         }
 
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes scanLine {
+            0% { top: -2px; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Custom pixel art style icons */
         .game-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+            border-radius: 8px;
+            font-size: 2rem;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .game-icon::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: var(--dark-bg);
+            border-radius: 6px;
+            z-index: -1;
+        }
+
+        .game-card:hover .game-icon {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 0, 128, 0.5);
         }
 
         .game-title {
             font-family: var(--font-display);
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: var(--neon-blue);
             margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .game-description {
+            font-size: 0.9rem;
+            color: var(--chrome-silver);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        /* Game card badges */
+        .game-badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .game-badge {
+            background: linear-gradient(45deg, var(--neon-purple), var(--deep-purple));
+            border: 1px solid var(--neon-purple);
+            border-radius: 12px;
+            padding: 0.25rem 0.75rem;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            color: var(--glow-white);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(128, 0, 255, 0.3);
+        }
+
+        .badge-players {
+            background: linear-gradient(45deg, var(--neon-blue), var(--deep-purple));
+            border-color: var(--neon-blue);
+        }
+
+        .badge-difficulty {
+            background: linear-gradient(45deg, var(--neon-pink), var(--deep-purple));
+            border-color: var(--neon-pink);
         }
 
         /* ========== MENU SECTION ========== */
@@ -435,53 +546,128 @@
         /* ========== EVENTS SECTION ========== */
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .event-card {
-            background: linear-gradient(135deg, rgba(128, 0, 255, 0.2), rgba(26, 0, 51, 0.3));
-            border: 1px solid rgba(128, 0, 255, 0.4);
+            background: linear-gradient(135deg, rgba(255, 0, 150, 0.1), rgba(0, 255, 255, 0.1));
+            border: 2px solid rgba(0, 255, 255, 0.3);
             border-radius: 15px;
-            padding: 2.5rem;
-            text-align: center;
+            padding: 2rem;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
-        .event-card::after {
+        .event-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 48%, var(--neon-pink) 50%, transparent 52%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
         }
 
-        .event-card:hover::after {
-            opacity: 0.1;
+        .event-card:hover::before {
+            transform: translateX(100%);
         }
 
         .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(128, 0, 255, 0.4);
+            transform: translateY(-8px);
+            border-color: var(--neon-pink);
+            box-shadow: 0 15px 40px rgba(255, 0, 150, 0.3), 
+                        0 0 30px rgba(0, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(255, 0, 150, 0.15), rgba(0, 255, 255, 0.15));
+        }
+
+        .event-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            animation: iconPulse 3s ease-in-out infinite;
+            position: relative;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+                transform: scale(1.05);
+            }
+        }
+
+        .event-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
         }
 
         .event-title {
             font-family: var(--font-display);
-            font-size: 1.5rem;
-            color: var(--neon-purple);
+            color: var(--neon-blue);
             margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            text-align: center;
+        }
+
+        .event-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-pink), transparent);
+            transition: width 0.3s ease;
+        }
+
+        .event-card:hover .event-title::after {
+            width: 100px;
         }
 
         .event-description {
             color: var(--chrome-silver);
             line-height: 1.6;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .event-badge {
+            display: block;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 1rem auto 0 auto;
+            box-shadow: 0 0 10px rgba(255, 0, 150, 0.3);
+            text-align: center;
+            width: fit-content;
         }
 
         .events-cta {
@@ -500,33 +686,142 @@
         .testimonial-card {
             background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(10, 0, 21, 0.8));
             border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 10px;
+            border-radius: 15px;
             padding: 2rem;
             position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .testimonial-card::before {
-            content: '"';
+            content: '';
             position: absolute;
-            top: -10px;
-            left: 20px;
-            font-size: 4rem;
-            color: var(--neon-blue);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 0, 150, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+        }
+
+        .testimonial-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-pink);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.3),
+                        0 0 25px rgba(255, 0, 150, 0.2);
+        }
+
+        .player-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-family: var(--font-display);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            animation: avatarGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes avatarGlow {
+            0% { 
+                box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            }
+            100% { 
+                box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+            }
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .player-info {
+            flex: 1;
+        }
+
+        .player-level {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--neon-purple);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .testimonial-text {
             font-style: italic;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             font-size: 1.1rem;
             line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            top: -15px;
+            left: -10px;
+            font-size: 4rem;
+            color: var(--neon-blue);
+            font-family: var(--font-display);
+            opacity: 0.3;
         }
 
         .testimonial-author {
             font-family: var(--font-display);
             color: var(--neon-pink);
             font-weight: 700;
-            text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            margin-top: 1rem;
+        }
+
+        .author-name {
+            flex: 1;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .achievement-badge {
+            background: linear-gradient(45deg, var(--circuit-green), #00cc33);
+            color: var(--dark-bg);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            white-space: nowrap;
+            animation: badgeGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes badgeGlow {
+            0% { 
+                box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            100% { 
+                box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+            }
         }
 
         /* ========== FOOTER ========== */
@@ -636,6 +931,42 @@
             font-size: 0.9rem;
         }
 
+        .designer-credit {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .futurelab-link {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .futurelab-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.3s ease;
+        }
+
+        .futurelab-link:hover {
+            color: var(--neon-purple);
+            text-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        .futurelab-link:hover::after {
+            width: 100%;
+        }
+
         /* ========== RESPONSIVE DESIGN ========== */
         @media (max-width: 768px) {
             :root {
@@ -735,44 +1066,169 @@
         <h2 class="section-title">Level Select</h2>
         <div class="games-grid">
             <div class="game-card glow-effect">
-                <span class="game-icon">🕹️</span>
+                <div class="game-icon">
+                    <!-- Custom Pac-Man pixel art style -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M16 4C9.4 4 4 9.4 4 16s5.4 12 12 12c2.1 0 4.1-0.5 5.9-1.5L16 20l5.9-6.5C23.5 12.1 24 14.1 24 16c0-6.6-5.4-12-12-12z" fill="#ffff00"/>
+                        <circle cx="13" cy="12" r="1.5" fill="#000"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Pac-Man</h3>
-                <p>Chase those ghosts through neon mazes</p>
+                <p class="game-description">Chase those ghosts through neon mazes</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">1P</span>
+                    <span class="game-badge badge-difficulty">Classic</span>
+                </div>
             </div>
             <div class="game-card glow-effect">
-                <span class="game-icon">👊</span>
+                <div class="game-icon">
+                    <!-- Street Fighter fist icon -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M8 12h4v4H8v-4zm4 4h4v4h-4v-4zm4-4h4v4h-4v-4zm4 4h4v4h-4v-4zM8 20h16v4H8v-4z" fill="#ff6b6b"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Street Fighter II</h3>
-                <p>Hadoken your way to victory</p>
+                <p class="game-description">Hadoken your way to victory</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">2P</span>
+                    <span class="game-badge badge-difficulty">Boss</span>
+                </div>
             </div>
             <div class="game-card glow-effect">
-                <span class="game-icon">🚀</span>
+                <div class="game-icon">
+                    <!-- Spaceship icon -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M16 4l-2 6h4l-2-6zm-4 8h8l2 4H10l2-4zm-2 6h12l-2 4H12l-2-4zm0 6h8v4h-8v-4z" fill="#4ecdc4"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Galaga</h3>
-                <p>Defend the galaxy in style</p>
+                <p class="game-description">Defend the galaxy in style</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">1P</span>
+                    <span class="game-badge badge-difficulty">Action</span>
+                </div>
             </div>
             <div class="game-card glow-effect">
-                <span class="game-icon">🦖</span>
+                <div class="game-icon">
+                    <!-- Dig Dug character -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <circle cx="16" cy="10" r="4" fill="#95e1d3"/>
+                        <rect x="14" y="14" width="4" height="8" fill="#95e1d3"/>
+                        <rect x="12" y="22" width="2" height="4" fill="#95e1d3"/>
+                        <rect x="18" y="22" width="2" height="4" fill="#95e1d3"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Dig Dug</h3>
-                <p>Pump up the retro vibes</p>
+                <p class="game-description">Pump up the retro vibes</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">1P</span>
+                    <span class="game-badge badge-difficulty">Puzzle</span>
+                </div>
             </div>
             <div class="game-card glow-effect">
-                <span class="game-icon">🏓</span>
+                <div class="game-icon">
+                    <!-- Pong paddle -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <rect x="6" y="10" width="2" height="12" fill="#ffffff"/>
+                        <rect x="24" y="8" width="2" height="16" fill="#ffffff"/>
+                        <circle cx="16" cy="16" r="2" fill="#ffffff"/>
+                        <path d="M14 16h4" stroke="#ffffff" stroke-width="2"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Pong</h3>
-                <p>Where it all began</p>
+                <p class="game-description">Where it all began</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">2P</span>
+                    <span class="game-badge badge-difficulty">Retro</span>
+                </div>
             </div>
             <div class="game-card glow-effect">
-                <span class="game-icon">🍄</span>
+                <div class="game-icon">
+                    <!-- Mario/Donkey Kong barrel -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <ellipse cx="16" cy="12" rx="8" ry="4" fill="#8B4513"/>
+                        <rect x="8" y="12" width="16" height="8" fill="#8B4513"/>
+                        <ellipse cx="16" cy="20" rx="8" ry="4" fill="#654321"/>
+                        <rect x="10" y="14" width="12" height="2" fill="#654321"/>
+                        <rect x="10" y="18" width="12" height="2" fill="#654321"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Donkey Kong</h3>
-                <p>Jump your way to the top</p>
+                <p class="game-description">Jump your way to the top</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">1P</span>
+                    <span class="game-badge badge-difficulty">Platform</span>
+                </div>
             </div>
             <div class="game-card glow-effect">
-                <span class="game-icon">👾</span>
+                <div class="game-icon">
+                    <!-- Space Invader -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <rect x="12" y="8" width="8" height="2" fill="#00ff00"/>
+                        <rect x="10" y="10" width="12" height="2" fill="#00ff00"/>
+                        <rect x="8" y="12" width="16" height="2" fill="#00ff00"/>
+                        <rect x="10" y="14" width="4" height="2" fill="#00ff00"/>
+                        <rect x="18" y="14" width="4" height="2" fill="#00ff00"/>
+                        <rect x="14" y="16" width="4" height="2" fill="#00ff00"/>
+                        <rect x="12" y="18" width="2" height="2" fill="#00ff00"/>
+                        <rect x="18" y="18" width="2" height="2" fill="#00ff00"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Space Invaders</h3>
-                <p>Retro alien blasting action</p>
+                <p class="game-description">Retro alien blasting action</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">1P</span>
+                    <span class="game-badge badge-difficulty">Shooter</span>
+                </div>
             </div>
             <div class="game-card glow-effect">
-                <span class="game-icon">🏎️</span>
+                <div class="game-icon">
+                    <!-- OutRun car -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <rect x="10" y="16" width="12" height="8" fill="#ff69b4"/>
+                        <rect x="8" y="18" width="16" height="4" fill="#ff1493"/>
+                        <circle cx="12" cy="24" r="2" fill="#333"/>
+                        <circle cx="20" cy="24" r="2" fill="#333"/>
+                        <rect x="14" y="12" width="4" height="4" fill="#87ceeb"/>
+                        <!-- Headlights -->
+                        <circle cx="9" cy="20" r="1" fill="#ffff00"/>
+                        <circle cx="23" cy="20" r="1" fill="#ffff00"/>
+                    </svg>
+                </div>
                 <h3 class="game-title">Out Run</h3>
-                <p>Cruise the synthwave highway</p>
+                <p class="game-description">Cruise the synthwave highway</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">1P</span>
+                    <span class="game-badge badge-difficulty">Racing</span>
+                </div>
+            </div>
+            <div class="game-card glow-effect">
+                <div class="game-icon">
+                    <!-- Tetris blocks -->
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <!-- T-piece -->
+                        <rect x="8" y="8" width="4" height="4" fill="#9b59b6"/>
+                        <rect x="12" y="8" width="4" height="4" fill="#9b59b6"/>
+                        <rect x="16" y="8" width="4" height="4" fill="#9b59b6"/>
+                        <rect x="12" y="12" width="4" height="4" fill="#9b59b6"/>
+                        <!-- L-piece -->
+                        <rect x="20" y="16" width="4" height="4" fill="#e67e22"/>
+                        <rect x="20" y="20" width="4" height="4" fill="#e67e22"/>
+                        <rect x="20" y="24" width="4" height="4" fill="#e67e22"/>
+                        <rect x="24" y="24" width="4" height="4" fill="#e67e22"/>
+                        <!-- Square piece -->
+                        <rect x="4" y="20" width="4" height="4" fill="#f1c40f"/>
+                        <rect x="8" y="20" width="4" height="4" fill="#f1c40f"/>
+                        <rect x="4" y="24" width="4" height="4" fill="#f1c40f"/>
+                        <rect x="8" y="24" width="4" height="4" fill="#f1c40f"/>
+                    </svg>
+                </div>
+                <h3 class="game-title">Tetris</h3>
+                <p class="game-description">Stack blocks, clear lines, achieve zen</p>
+                <div class="game-badges">
+                    <span class="game-badge badge-players">1P</span>
+                    <span class="game-badge badge-difficulty">Puzzle</span>
+                </div>
             </div>
         </div>
     </section>
@@ -848,16 +1304,58 @@
         <h2 class="section-title">Event Schedule</h2>
         <div class="events-grid">
             <div class="event-card">
+                <div class="event-icon">
+                    <!-- Themed Nights Icon - Calendar with game controller -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="3" y="4" width="18" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 2v4M16 2v4M3 10h18"/>
+                        <!-- Game controller overlay -->
+                        <rect x="9" y="12" width="6" height="4" rx="1" fill="currentColor"/>
+                        <circle cx="11" cy="14" r="0.5" fill="white"/>
+                        <circle cx="13" cy="14" r="0.5" fill="white"/>
+                    </svg>
+                </div>
                 <h3 class="event-title">Themed Nights</h3>
                 <p class="event-description">Journey through different gaming eras every Thursday. From 8-bit classics to modern indies, each night celebrates a unique piece of gaming history with matching cocktails and decorations.</p>
+                <div class="event-badge">Weekly Events</div>
             </div>
             <div class="event-card">
+                <div class="event-icon">
+                    <!-- Tournament Icon - Trophy with pixel art -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L10 8h4l-2-6z"/>
+                        <rect x="10" y="8" width="4" height="6" rx="1"/>
+                        <rect x="8" y="14" width="8" height="2"/>
+                        <rect x="9" y="16" width="6" height="2"/>
+                        <rect x="10" y="18" width="4" height="2"/>
+                        <!-- Pixel decoration -->
+                        <rect x="6" y="10" width="2" height="2" fill="currentColor"/>
+                        <rect x="16" y="10" width="2" height="2" fill="currentColor"/>
+                    </svg>
+                </div>
                 <h3 class="event-title">Tournaments</h3>
                 <p class="event-description">Compete for glory and prizes every weekend. From Street Fighter showdowns to Pac-Man speed runs, prove your skills and claim your spot on our digital leaderboard.</p>
+                <div class="event-badge">Competitive</div>
             </div>
             <div class="event-card">
+                <div class="event-icon">
+                    <!-- Private Party Icon - Group with arcade cabinet -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="8" y="4" width="8" height="12" rx="1" stroke="currentColor" fill="none" stroke-width="1.5"/>
+                        <rect x="10" y="6" width="4" height="3" fill="currentColor"/>
+                        <rect x="10" y="11" width="4" height="3" fill="currentColor"/>
+                        <!-- People silhouettes -->
+                        <circle cx="4" cy="18" r="2" fill="currentColor"/>
+                        <circle cx="12" cy="18" r="2" fill="currentColor"/>
+                        <circle cx="20" cy="18" r="2" fill="currentColor"/>
+                        <rect x="3" y="20" width="2" height="2" fill="currentColor"/>
+                        <rect x="11" y="20" width="2" height="2" fill="currentColor"/>
+                        <rect x="19" y="20" width="2" height="2" fill="currentColor"/>
+                    </svg>
+                </div>
                 <h3 class="event-title">Private Parties</h3>
                 <p class="event-description">Book the entire arcade for your special occasion. Birthday parties, corporate events, or just a night out with friends - we'll create the perfect retro-futuristic atmosphere.</p>
+                <div class="event-badge">Exclusive</div>
             </div>
         </div>
         <div class="events-cta">
@@ -870,16 +1368,43 @@
         <h2 class="section-title">Player Reviews</h2>
         <div class="testimonials-grid">
             <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="player-avatar">AX</div>
+                    <div class="player-info">
+                        <div class="player-level">Level 42 • Pro Gamer</div>
+                    </div>
+                </div>
                 <p class="testimonial-text">This place is absolutely incredible! The atmosphere is like stepping into Tron, and the cocktails are next level. Best night out I've had in years!</p>
-                <p class="testimonial-author">— Alex_CodeMaster</p>
+                <div class="testimonial-author">
+                    <span class="author-name">— Alex_CodeMaster</span>
+                    <span class="achievement-badge">High Score</span>
+                </div>
             </div>
             <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="player-avatar">SQ</div>
+                    <div class="player-info">
+                        <div class="player-level">Level 38 • Fighting Game Expert</div>
+                    </div>
+                </div>
                 <p class="testimonial-text">Finally found my perfect hangout spot. Great games, amazing drinks, and the neon aesthetic is pure perfection. Can't wait to come back!</p>
-                <p class="testimonial-author">— Sam, Combo Queen</p>
+                <div class="testimonial-author">
+                    <span class="author-name">— Sam, Combo Queen</span>
+                    <span class="achievement-badge">Combo Master</span>
+                </div>
             </div>
             <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="player-avatar">RR</div>
+                    <div class="player-info">
+                        <div class="player-level">Level 55 • Arcade Legend</div>
+                    </div>
+                </div>
                 <p class="testimonial-text">Neon Nights hit the perfect balance between nostalgic gaming and sophisticated nightlife. The staff knows their cocktails AND their high scores!</p>
-                <p class="testimonial-author">— RetroRival_99</p>
+                <div class="testimonial-author">
+                    <span class="author-name">— RetroRival_99</span>
+                    <span class="achievement-badge">Legend</span>
+                </div>
             </div>
         </div>
     </section>
@@ -917,6 +1442,9 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2025 Neon Nights Arcade Bar. All rights reserved. | Game On Responsibly</p>
+                <p class="designer-credit">
+                    Designed by <a href="https://www.futurelab.solutions/" target="_blank" rel="noopener noreferrer" class="futurelab-link">Futurelab</a>
+                </p>
             </div>
         </div>
     </footer>
