@@ -192,13 +192,19 @@
         }
 
         .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(255, 0, 128, 0.4);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 0 20px var(--neon-blue), 0 12px 40px rgba(255, 0, 128, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .cta-primary:hover {
+            box-shadow: 0 0 25px var(--neon-pink), 0 12px 40px rgba(255, 0, 128, 0.5);
         }
 
         .cta-secondary:hover {
             background: rgba(0, 255, 255, 0.2);
-            box-shadow: 0 12px 40px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px var(--neon-blue), 0 12px 40px rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px) scale(1.03);
         }
 
         .scroll-indicator {
@@ -463,6 +469,53 @@
         .badge-difficulty {
             background: linear-gradient(45deg, var(--neon-pink), var(--deep-purple));
             border-color: var(--neon-pink);
+        }
+
+        /* ========== SECTION BREAK TRANSITIONS ========== */
+        .section-divider {
+            position: relative;
+            height: 80px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-divider svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .section-divider.diagonal {
+            background: linear-gradient(135deg, var(--dark-bg) 50%, rgba(0, 255, 255, 0.1) 50%);
+        }
+
+        .section-divider.zigzag {
+            background: var(--dark-bg);
+        }
+
+        .section-divider .divider-glow {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
+            top: 50%;
+            transform: translateY(-50%);
+            animation: dividerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes dividerPulse {
+            0%, 100% { 
+                opacity: 0.6;
+                transform: translateY(-50%) scaleX(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: translateY(-50%) scaleX(1.05);
+            }
         }
 
         /* ========== MENU SECTION ========== */
@@ -1233,6 +1286,22 @@
         </div>
     </section>
 
+    <!-- Section Divider -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="dividerGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:rgba(0,255,255,0.4);stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:rgba(255,0,150,0.6);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(128,0,255,0.4);stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M0,80 Q300,0 600,40 T1200,80 L1200,80 L0,80 Z" fill="url(#dividerGradient1)" opacity="0.6"/>
+            <path d="M0,80 Q300,0 600,40 T1200,80" stroke="var(--neon-blue)" stroke-width="1.5" fill="none" opacity="0.8"/>
+        </svg>
+        <div class="divider-glow"></div>
+    </div>
+
     <!-- Menu Section -->
     <section class="section menu-section" id="menu">
         <!-- Lottie Animation Background -->
@@ -1299,6 +1368,24 @@
         </div> <!-- Close menu-content -->
     </section>
 
+    <!-- Section Divider -->
+    <div class="section-divider zigzag">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="dividerGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:rgba(255,0,150,0.4);stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:rgba(0,255,255,0.6);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(255,0,150,0.4);stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M0,40 L100,0 L200,40 L300,0 L400,40 L500,0 L600,40 L700,0 L800,40 L900,0 L1000,40 L1100,0 L1200,40 L1200,80 L0,80 Z" 
+                  fill="url(#dividerGradient2)" opacity="0.7"/>
+            <path d="M0,40 L100,0 L200,40 L300,0 L400,40 L500,0 L600,40 L700,0 L800,40 L900,0 L1000,40 L1100,0 L1200,40" 
+                  stroke="var(--neon-pink)" stroke-width="1.5" fill="none" opacity="0.8"/>
+        </svg>
+        <div class="divider-glow"></div>
+    </div>
+
     <!-- Events Section -->
     <section class="section">
         <h2 class="section-title">Event Schedule</h2>
@@ -1362,6 +1449,22 @@
             <a href="#" class="cta-btn cta-primary">Check Upcoming Events</a>
         </div>
     </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="dividerGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:rgba(128,0,255,0.4);stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:rgba(0,255,255,0.6);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:rgba(128,0,255,0.4);stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M0,80 Q300,0 600,40 T1200,80 L1200,80 L0,80 Z" fill="url(#dividerGradient3)" opacity="0.6"/>
+            <path d="M0,80 Q300,0 600,40 T1200,80" stroke="var(--neon-purple)" stroke-width="1.5" fill="none" opacity="0.8"/>
+        </svg>
+        <div class="divider-glow"></div>
+    </div>
 
     <!-- Testimonials Section -->
     <section class="section">
