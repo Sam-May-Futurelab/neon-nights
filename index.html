@@ -8,6 +8,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    
+    <!-- Favicons -->
+    <link rel="icon" href="images/favicon/favicon.ico" sizes="32x32">
+    <link rel="icon" href="images/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96x96.png">
+    <link rel="manifest" href="images/favicon/site.webmanifest">
+    
     <style>
         /* ========== RESET & BASE STYLES ========== */
         * {
@@ -267,7 +275,6 @@
             border: 1px solid rgba(0, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
-            margin-top: 8rem; /* Add gap between hero and about sections */
         }
 
         .about-video-bg {
@@ -304,6 +311,18 @@
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
+        }
+
+        /* ========== PAC-MAN ANIMATION ========== */
+        .pacman-container {
+            text-align: center;
+            margin: -3rem 0;
+        }
+
+        #pacman-animation {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
         }
 
         /* ========== GAMES GALLERY ========== */
@@ -1096,6 +1115,11 @@
         </div>
     </section>
 
+    <!-- Pac-Man Animation -->
+    <div class="pacman-container">
+        <div id="pacman-animation"></div>
+    </div>
+
     <!-- About Section -->
     <section class="section about">
         <!-- Background Video -->
@@ -1563,11 +1587,26 @@
                 path: 'images/bg-animation.json'
             });
 
+            // Initialize Pac-Man animation
+            const pacmanAnimation = lottie.loadAnimation({
+                container: document.getElementById('pacman-animation'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'images/pacman.json'
+            });
+
             // Optional: Add error handling
             menuAnimation.addEventListener('data_failed', function() {
                 console.warn('Failed to load menu background animation');
                 // Fallback: hide the animation container if loading fails
                 document.getElementById('menuLottieAnimation').style.display = 'none';
+            });
+
+            pacmanAnimation.addEventListener('data_failed', function() {
+                console.warn('Failed to load Pac-Man animation');
+                // Fallback: hide the animation container if loading fails
+                document.getElementById('pacman-animation').style.display = 'none';
             });
         });
     </script>
